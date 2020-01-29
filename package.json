@@ -1,0 +1,38 @@
+{
+  "name": "omnesiac",
+  "version": "0.0.1",
+  "description": "Mutually-Exclusive Memoization",
+  "main": "build/index.js",
+  "author": "Jonathan Griggs <jonathan.griggs@ombud.com>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "test": "npx mocha --require ts-node/register --recursive \"src/**/*.spec.ts\"",
+    "test-build": "npx mocha --require ts-node/register --reporter xunit --reporter-options output=omnesiac-test-reports.xml --recursive \"src/**/*.spec.ts\"",
+    "lint": "eslint \"./src/**\"",
+    "lint-build": "eslint -f checkstyle \"./src/**\" -o omnesiac-checkstyle-reports.xml",
+    "build": "yarn clean && tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format-check": "prettier --list-different \"src/**/*.ts\" \"src/**/*.js\""
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^13.5.1",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "mocha": "^7.0.1",
+    "prettier": "^1.19.1",
+    "should": "^13.2.3",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "semi": true
+  }
+}
