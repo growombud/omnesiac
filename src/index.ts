@@ -68,6 +68,8 @@ export default function Omnesiac(
 ): (key: string, ...args: any[]) => Promise<any> {
   const { ttl = 0, passThrough = false, pollFrequencyMs = 10, evictionFrequencyMs = 50 } = options;
   const cache = new OmnesiacCache(evictionFrequencyMs);
+  cache.start(ttl);
+
   return async function(key: string, ...args: any[]): Promise<any> {
     const val = cache.get(key);
     if (!val) {
@@ -84,5 +86,4 @@ export default function Omnesiac(
       return val.result;
     }
   };
-  cache.start(ttl);
 }
