@@ -46,7 +46,7 @@ describe('Omnesiac', () => {
 
       let counter = 1;
       const wrapper = async (): Promise<AsyncTestResult> => {
-        const result = await omnesized('key', 50, counter++);
+        const result = await omnesized('key', 100, counter++);
         return { result, time: Date.now() };
       };
 
@@ -56,9 +56,8 @@ describe('Omnesiac', () => {
         { result: result3, time: time3 },
       ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
 
-      time1.should.be.a.Number().lessThan(time2);
-      time1.should.be.a.Number().lessThan(time3);
-      time2.should.be.a.Number().lessThanOrEqual(time3);
+      time1.should.be.a.Number().lessThanOrEqual(time2);
+      time1.should.be.a.Number().lessThanOrEqual(time3);
 
       should(result1).be.ok();
       should(result2).be.ok();
@@ -88,9 +87,8 @@ describe('Omnesiac', () => {
         { result: result3, time: time3 },
       ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
 
-      time1.should.be.a.Number().lessThan(time2);
-      time1.should.be.a.Number().lessThan(time3);
-      time2.should.be.a.Number().lessThanOrEqual(time3);
+      time1.should.be.a.Number().lessThanOrEqual(time2);
+      time1.should.be.a.Number().lessThanOrEqual(time3);
 
       should(result1).be.ok();
       should(result2).be.ok();
@@ -113,9 +111,8 @@ describe('Omnesiac', () => {
       time4.should.be.a.Number().greaterThan(time1);
       time4.should.be.a.Number().greaterThan(time2);
       time4.should.be.a.Number().greaterThan(time3);
-      time4.should.be.a.Number().lessThan(time5);
-      time4.should.be.a.Number().lessThan(time6);
-      time5.should.be.a.Number().lessThanOrEqual(time6);
+      time4.should.be.a.Number().lessThanOrEqual(time5);
+      time4.should.be.a.Number().lessThanOrEqual(time6);
 
       should(result4).be.ok();
       should(result5).be.ok();

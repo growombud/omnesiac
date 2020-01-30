@@ -29,7 +29,6 @@ export default function Omnesiac(
       while (val.inFlight && !passThrough) {
         await wait(pollFrequencyMs);
       }
-      return val.result;
     }
     return val.result;
   };

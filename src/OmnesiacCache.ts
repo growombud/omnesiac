@@ -1,6 +1,6 @@
 export interface OmnesiacResult {
   ttl?: number;
-  inFlight: boolean;
+  inFlight?: boolean;
   result?: any;
 }
 
@@ -37,6 +37,8 @@ export default class OmnesiacCache {
   }
 
   clear(): void {
-    this.map = {};
+    for (const key in this.map) {
+      this.remove(key);
+    }
   }
 }
