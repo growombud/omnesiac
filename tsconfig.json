@@ -10,10 +10,10 @@
     "noUnusedLocals": true,
     "sourceMap": false,
     "inlineSourceMap": true,
-    "outDir": "build",
+    "outDir": "dist",
     "target": "es5",
     "declaration": true,
-    "declarationDir": "build/types"
+    "declarationDir": "dist/types"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

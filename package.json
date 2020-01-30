@@ -2,11 +2,15 @@
   "name": "omnesiac",
   "version": "0.0.1",
   "description": "Mutually-Exclusive Memoization",
-  "main": "build/index.js",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/**/!(*.spec).*"
+  ],
   "author": "Jonathan Griggs <jonathan.griggs@ombud.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf ./build",
+    "clean": "rm -rf ./dist",
     "test": "npx mocha --require ts-node/register --recursive \"src/**/*.spec.ts\"",
     "test-build": "npx mocha --require ts-node/register --reporter xunit --reporter-options output=omnesiac-test-reports.xml --recursive \"src/**/*.spec.ts\"",
     "lint": "eslint \"./src/**\"",
