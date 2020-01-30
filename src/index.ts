@@ -1,6 +1,6 @@
 //declare function omnesiac<F extends Function>(f: F, options?: memoizee.Options): F & memoizee.Memoized<F>;
 interface OmnesiacResult {
-  expiry?: number;
+  ttl?: number;
   inFlight: boolean;
   result?: any;
 }
@@ -12,11 +12,11 @@ const wait = (ms: number): Promise<void> =>
 
 class OmnesiacCache {
   private map: Record<string, OmnesiacResult>;
-  private evictionFrequencyMs: number;
+  private timeouts: Record<string, NodeJS.Timeout>;
 
-  constructor(evictionFrequencyMs = 50) {
+  constructor() {
     this.map = {};
-    this.evictionFrequencyMs = evictionFrequencyMs;
+    this.timeouts = {};
   }
 
   get(key: string): OmnesiacResult {
@@ -30,28 +30,20 @@ class OmnesiacCache {
     } else {
       Object.assign(val, result);
     }
+    if (result.ttl) {
+      this.timeouts[key] = setTimeout(() => this.remove(key), result.ttl);
+      if (typeof this.timeouts[key].unref === 'function') this.timeouts[key].unref();
+    }
   }
 
   remove(key: string): void {
+    clearTimeout(this.timeouts[key]);
+    delete this.timeouts[key];
     delete this.map[key];
   }
 
   clear(): void {
     this.map = {};
-  }
-
-  async start(ttl: number): Promise<void> {
-    if (ttl) {
-      while (true) {
-        await wait(this.evictionFrequencyMs);
-        for (const key in this.map) {
-          const val = this.get(key);
-          if (!val.inFlight && val.expiry && val.expiry < Date.now()) {
-            this.remove(key);
-          }
-        }
-      }
-    }
   }
 }
 
@@ -59,31 +51,28 @@ export interface OmnesiacOptions {
   ttl?: number;
   passThrough?: boolean;
   pollFrequencyMs?: number;
-  evictionFrequencyMs?: number;
 }
 
 export default function Omnesiac(
   fn: Function,
   options: OmnesiacOptions,
 ): (key: string, ...args: any[]) => Promise<any> {
-  const { ttl = 0, passThrough = false, pollFrequencyMs = 10, evictionFrequencyMs = 50 } = options;
-  const cache = new OmnesiacCache(evictionFrequencyMs);
-  cache.start(ttl);
+  const { ttl = 0, passThrough = false, pollFrequencyMs = 10 } = options;
+  const cache = new OmnesiacCache();
 
   return async function(key: string, ...args: any[]): Promise<any> {
     const val = cache.get(key);
     if (!val) {
       cache.set(key, { inFlight: true });
       const retVal = await fn(...args);
-      cache.set(key, { expiry: Date.now() + ttl, inFlight: false, result: retVal });
+      cache.set(key, { ttl, inFlight: false, result: retVal });
       return retVal;
-    } else if (val.expiry && val.expiry > Date.now()) {
-      return val.result;
     } else if (val.inFlight) {
       while (val.inFlight && !passThrough) {
         await wait(pollFrequencyMs);
       }
       return val.result;
     }
+    return val.result;
   };
 }
