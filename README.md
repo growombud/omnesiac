@@ -30,7 +30,7 @@ async function doPeriodicAsynchronousWork(arg1, arg2) {
 /*
  Memoize the results of this function for 30 seconds, and block subsequent calls while the asynchronous work is in-flight
 */
-const throttledFn = Omnesiac(someAsyncFn, { ttl: 30000, blocking: true });
+const throttledFn = Omnesiac(doPeriodicAsynchronousWork, { ttl: 30000, blocking: true });
 
 const param1 = 'firstArgToTargetFunction';
 const param2 = 'secondArgToTargetFunction';
