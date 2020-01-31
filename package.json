@@ -4,6 +4,17 @@
   "description": "Mutually-Exclusive, Asynchronous Memoization",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
+  "keywords": [
+    "asynchronous",
+    "memoize",
+    "blocking",
+    "cache",
+    "mutex",
+    "timed",
+    "ttl",
+    "memoization",
+    "throttle"
+  ],
   "files": [
     "dist/**/!(*.spec).*"
   ],
