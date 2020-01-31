@@ -13,10 +13,10 @@ interface AsyncTestResult {
 }
 
 describe('Omnesiac', () => {
-  describe('passThrough = true', () => {
-    it('should only process one request at a time, concurrent requests should pass through, without executing function', async () => {
+  describe('blocking = false', () => {
+    it('should only process one request at a time, concurrent requests should not be blocked by in-flight', async () => {
       const fn = sinon.spy(wait);
-      const omnesized = Omnesiac(fn, { passThrough: true });
+      const omnesized = Omnesiac(fn, { blocking: false });
 
       const wrapper = async (): Promise<AsyncTestResult> => {
         const result = await omnesized('key', 50, 'waited for 50');
@@ -39,10 +39,10 @@ describe('Omnesiac', () => {
       fn.calledOnce.should.be.true;
     });
   });
-  describe('passThrough = false', () => {
-    it('should only process one request at a time, concurrent requests should wait until in-flight is finished executing and return result', async () => {
+  describe('blocking = true', () => {
+    it('should only process one request at a time, concurrent requests should block during in-flight and return result', async () => {
       const fn = sinon.spy(wait);
-      const omnesized = Omnesiac(fn, { passThrough: false });
+      const omnesized = Omnesiac(fn, { blocking: true });
 
       let counter = 1;
       const wrapper = async (): Promise<AsyncTestResult> => {
@@ -73,7 +73,7 @@ describe('Omnesiac', () => {
   describe('ttl = ?', () => {
     it('should memoize the results of the function until the ttl has expired', async () => {
       const fn = sinon.spy(wait);
-      const omnesized = Omnesiac(fn, { passThrough: false, ttl: 75 });
+      const omnesized = Omnesiac(fn, { blocking: true, ttl: 75 });
 
       let counter = 1;
       const wrapper = async (): Promise<AsyncTestResult> => {

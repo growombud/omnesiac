@@ -7,7 +7,7 @@ const wait = (ms: number): Promise<void> =>
   });
 
 export = function Omnesiac(fn: Function, options: OmnesiacOptions): (key: string, ...args: any[]) => Promise<any> {
-  const { ttl = 0, passThrough = false, pollFrequencyMs = 10 } = options;
+  const { ttl = 0, blocking = false, pollFrequencyMs = 10 } = options;
   const cache = new OmnesiacCache();
 
   return async function(key: string, ...args: any[]): Promise<any> {
@@ -18,7 +18,7 @@ export = function Omnesiac(fn: Function, options: OmnesiacOptions): (key: string
       cache.set(key, { ttl, inFlight: false, result: retVal });
       return retVal;
     } else if (val.inFlight) {
-      while (val.inFlight && !passThrough) {
+      while (val.inFlight && blocking) {
         await wait(pollFrequencyMs);
       }
     }

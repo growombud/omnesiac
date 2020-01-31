@@ -1,5 +1,5 @@
 export default interface OmnesiacOptions {
   ttl?: number;
-  passThrough?: boolean;
+  blocking?: boolean;
   pollFrequencyMs?: number;
 }
