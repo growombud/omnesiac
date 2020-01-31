@@ -12,6 +12,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "npx mocha --require ts-node/register --recursive \"src/**/*.spec.ts\"",
+    "ci-test": "yarn run lint && yarn test && yarn run build",
     "test-build": "npx mocha --require ts-node/register --reporter xunit --reporter-options output=omnesiac-test-reports.xml --recursive \"src/**/*.spec.ts\"",
     "lint": "eslint \"./src/**\"",
     "lint-build": "eslint -f checkstyle \"./src/**\" -o omnesiac-checkstyle-reports.xml",

@@ -1,5 +1,10 @@
 # (-\_-)ゞ゛ Omnesiac
 
+[![npm version](https://badge.fury.io/js/omnesiac.svg)](https://badge.fury.io/js/omnesiac)
+[![Build Status](https://travis-ci.org/growombud/omnesiac.svg?branch=master)](https://travis-ci.org/growombud/omnesiac)
+
+## Overview
+
 A library implementing the marriage of two abstractions:
 
 - Mutual Exclusion
