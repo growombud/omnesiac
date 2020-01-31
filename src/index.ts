@@ -1,20 +1,12 @@
 import OmnesiacCache from './OmnesiacCache';
+import OmnesiacOptions from './OmnesiacOptions';
 
 const wait = (ms: number): Promise<void> =>
   new Promise(resolve => {
     setTimeout(() => resolve(), ms);
   });
 
-export interface OmnesiacOptions {
-  ttl?: number;
-  passThrough?: boolean;
-  pollFrequencyMs?: number;
-}
-
-export default function Omnesiac(
-  fn: Function,
-  options: OmnesiacOptions,
-): (key: string, ...args: any[]) => Promise<any> {
+export = function Omnesiac(fn: Function, options: OmnesiacOptions): (key: string, ...args: any[]) => Promise<any> {
   const { ttl = 0, passThrough = false, pollFrequencyMs = 10 } = options;
   const cache = new OmnesiacCache();
 
@@ -32,4 +24,4 @@ export default function Omnesiac(
     }
     return val.result;
   };
-}
+};

@@ -1,5 +1,5 @@
-import * as should from 'should';
-import Omnesiac from './index';
+import should = require('should');
+import Omnesiac = require('./index');
 import * as sinon from 'sinon';
 
 const wait = (ms: number, ...args: any[]): Promise<any[]> =>

@@ -1,4 +1,4 @@
-import * as should from 'should';
+import should = require('should');
 import OmnesiacCache from './OmnesiacCache';
 import * as sinon from 'sinon';
 
