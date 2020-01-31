@@ -7,20 +7,52 @@ A library implementing the marriage of two abstractions:
 
 Concretely, this library was built to service two use-cases:
 
-- I need to execute some asynchronous work, **once-at-most**, within a given time-span, and all other subsequent requests within the time window must _wait for the result of that asynchronous work_.
-- I need to execute some asynchronous work, **once-at-most**, within a given time-span, and all other subsequent requests within the time window must _continue without knowing the result of that asynchronous work_.
+- I need to perform some asynchronous work, **throttled per unique key**, and all subsequent calls using that key will _block and await the result of that asynchronous work_.
+- I need to perform some asynchronous work, **throttled per unique key**, and all subsequent calls using that key will _continue without knowing the result of that asynchronous work_.
+
+tldr; a data-specific throttling mechanism in blocking and non-blocking flavors.
 
 ## Installation
 
-_TODO: Publish to npm_
+`yarn add omnesiac`
 
 ## Usage
 
-_TODO: Documentation_
+```javascript
+const Omnesiac = require('omnesiac');
+
+async function doPeriodicAsynchronousWork(arg1, arg2) {
+  /* 
+    ...Do the deed...
+  */
+}
+
+/*
+ Memoize the results of this function for 30 seconds, and block subsequent calls while the asynchronous work is in-flight
+*/
+const throttledFn = Omnesiac(someAsyncFn, { ttl: 30000, blocking: true });
+
+const param1 = 'firstArgToTargetFunction';
+const param2 = 'secondArgToTargetFunction';
+const throttleKey = 'anyStringPerhapsAUserId';
+
+/*
+  The first call will execute the function. Subsequent calls using the same throttleKey will wait
+  for the first call to finish and then resolve with the result of the first call for the next 30 seconds,
+  whereupon, the next call will resume blocking until it has resolved, and on...
+*/
+const results = await throttledFn(throttleKey, param1, param2);
+```
 
 ## TODO
 
-- Document behavior
+- Better Documentation
+  - Behavior
+    - `{ ttl: 0 }`
+    - Resolution order of blocked calls not guaranteed
+  - Real-world Use Cases
+- Timeouts on resolution of function calls?
+  - Probably makes sense in the blocking scenario
 - Many more tests
   - Ensure proper scoping / garbage-collection aspects
 - Write proper Typescript generics
