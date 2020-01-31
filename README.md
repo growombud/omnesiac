@@ -19,6 +19,8 @@ tldr; a data-specific throttling mechanism in blocking and non-blocking flavors.
 
 ## Installation
 
+Tested with >= Node.js 8.x
+
 `yarn add omnesiac`
 
 ## Usage
@@ -60,14 +62,11 @@ const results = await throttledFn(throttleKey, param1, param2);
   - Probably makes sense in the blocking scenario
 - Many more tests
   - Ensure proper scoping / garbage-collection aspects
+- Implement CodeCov.io or similar
+  - Probably Istanbul
 - Write proper Typescript generics
   - Eliminate `any` types
   - Set `strict: true` in tsconfig.json
-- Implement CI
-  - Probably via Travis, if we're OSS'ing this package
-    - explore pros / cons of doing it via internal Jenkins
-  - Implement NPM publish
-    - Possibly via release-it, a la ombud-permissions
 
 ## Contributing
 
