@@ -15,7 +15,7 @@ Concretely, this library was built to service two use-cases:
 - I need to perform some asynchronous work, **throttled per unique key**, and all subsequent calls using that key will _block and await the result of that asynchronous work_.
 - I need to perform some asynchronous work, **throttled per unique key**, and all subsequent calls using that key will _continue without knowing the result of that asynchronous work_.
 
-tldr; a data-specific throttling mechanism in blocking and non-blocking flavors.
+tldr; a mutex-based throttling mechanism in blocking and non-blocking flavors.
 
 ## Installation
 
