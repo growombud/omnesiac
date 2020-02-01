@@ -64,9 +64,6 @@ const results = await throttledFn(throttleKey, param1, param2);
   - Ensure proper scoping / garbage-collection aspects
 - Implement CodeCov.io or similar
   - Probably Istanbul
-- Write proper Typescript generics
-  - Eliminate `any` types
-  - Set `strict: true` in tsconfig.json
 
 ## Contributing
 

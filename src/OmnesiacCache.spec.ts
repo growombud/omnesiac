@@ -2,10 +2,12 @@ import should = require('should');
 import OmnesiacCache from './OmnesiacCache';
 import * as sinon from 'sinon';
 
-const wait = (ms: number, ...args: any[]): Promise<any[]> =>
-  new Promise(resolve => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function wait<T extends any[]>(ms: number, ...args: T): Promise<T> {
+  return new Promise(resolve => {
     setTimeout(() => resolve(...args), ms);
   });
+}
 
 describe('OmnesiacCache', () => {
   describe('set()', () => {

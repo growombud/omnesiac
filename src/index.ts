@@ -6,11 +6,15 @@ const wait = (ms: number): Promise<void> =>
     setTimeout(() => resolve(), ms);
   });
 
-export = function Omnesiac(fn: Function, options: OmnesiacOptions): (key: string, ...args: any[]) => Promise<any> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export = function Omnesiac<T extends (...args: any[]) => any>(
+  fn: T,
+  options: OmnesiacOptions,
+): (key: string, ...args: Parameters<T>) => Promise<ReturnType<T> | void> {
   const { ttl = 0, blocking = false, pollFrequencyMs = 10 } = options;
-  const cache = new OmnesiacCache();
+  const cache = new OmnesiacCache<ReturnType<T>>();
 
-  return async function(key: string, ...args: any[]): Promise<any> {
+  return async function(key: string, ...args: Parameters<T>): Promise<ReturnType<T> | void> {
     const val = cache.get(key);
     if (!val) {
       cache.set(key, { inFlight: true });

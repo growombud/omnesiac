@@ -1,11 +1,11 @@
-export interface OmnesiacResult {
+export interface OmnesiacResult<T> {
   ttl?: number;
   inFlight?: boolean;
-  result?: any;
+  result?: T;
 }
 
-export default class OmnesiacCache {
-  private map: Record<string, OmnesiacResult>;
+export default class OmnesiacCache<T> {
+  private map: Record<string, OmnesiacResult<T>>;
   private timeouts: Record<string, NodeJS.Timeout>;
 
   constructor() {
@@ -13,11 +13,11 @@ export default class OmnesiacCache {
     this.timeouts = {};
   }
 
-  get(key: string): OmnesiacResult {
+  get(key: string): OmnesiacResult<T> {
     return this.map[key];
   }
 
-  set(key: string, result: OmnesiacResult): void {
+  set(key: string, result: OmnesiacResult<T>): void {
     const val = this.get(key);
     if (!val) {
       this.map[key] = result;

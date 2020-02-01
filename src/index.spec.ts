@@ -2,12 +2,15 @@ import should = require('should');
 import Omnesiac = require('./index');
 import * as sinon from 'sinon';
 
-const wait = (ms: number, ...args: any[]): Promise<any[]> =>
-  new Promise(resolve => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function wait<T extends any[]>(ms: number, ...args: T): Promise<T> {
+  return new Promise(resolve => {
     setTimeout(() => resolve(...args), ms);
   });
+}
 
 interface AsyncTestResult {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   result?: any;
   time: number;
 }
@@ -73,7 +76,7 @@ describe('Omnesiac', () => {
   describe('ttl = ?', () => {
     it('should memoize the results of the function until the ttl has expired', async () => {
       const fn = sinon.spy(wait);
-      const omnesized = Omnesiac(fn, { blocking: true, ttl: 75 });
+      const omnesized = Omnesiac(wait, { blocking: true, ttl: 75 });
 
       let counter = 1;
       const wrapper = async (): Promise<AsyncTestResult> => {

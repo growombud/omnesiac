@@ -12,6 +12,7 @@
     "inlineSourceMap": true,
     "outDir": "dist",
     "target": "es5",
+    "strict": true,
     "declaration": true,
     "declarationDir": "dist/types",
     "esModuleInterop": true
