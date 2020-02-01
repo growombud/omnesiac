@@ -76,7 +76,7 @@ describe('Omnesiac', () => {
   describe('ttl = ?', () => {
     it('should memoize the results of the function until the ttl has expired', async () => {
       const fn = sinon.spy(wait);
-      const omnesized = Omnesiac(wait, { blocking: true, ttl: 75 });
+      const omnesized = Omnesiac(fn, { blocking: true, ttl: 75 });
 
       let counter = 1;
       const wrapper = async (): Promise<AsyncTestResult> => {
