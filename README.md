@@ -55,11 +55,14 @@ const results = await throttledFn(throttleKey, param1, param2);
 
 - Better Documentation
   - Behavior
-    - `{ ttl: 0 }`
+    - `{ ttl: 0 }` = Never expire / cache forever
     - Resolution order of blocked calls not guaranteed
   - Real-world Use Cases
-- Timeouts on resolution of function calls?
-  - Probably makes sense in the blocking scenario
+    - \[Non-Blocking\] Sample data collection, where approximate precision is good-enough
+    - \[Blocking\] Cacheing burstable requests against shared resources
+- Timeouts on resolution of decorated function calls?
+  - Maybe better to leave the onus on the function prior to Omnesiac decoration
+  - Might make sense in the blocking scenario
 - Many more tests
   - Ensure proper scoping / garbage-collection aspects
 - Implement CodeCov.io or similar
@@ -72,7 +75,7 @@ const results = await throttledFn(throttleKey, param1, param2);
 3. Add / modify implementation\*
 4. Open PR
 
-\* (Optional, but strongly encouraged) Link to your development soundtrack in `README.md`
+\* (Optional, but strongly encouraged) Link to your development soundtrack appending this `README.md`
 
 # License
 
@@ -98,6 +101,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Soundtrack
+# Soundtrack
+
+If you contribute to this library you are strongly encouraged to append your development soundtrack as a link to this `README.md`. One link per-PR, please, and it should be publicly, freely accessible (Youtube is a good option).
 
 [![Francis Lai (Love Story Soundtrack) - Bozo Barrett](https://i.ytimg.com/vi/-j-KoAUln9U/hqdefault.jpg)](https://www.youtube.com/watch?v=-j-KoAUln9U)
+
+[![Lucio Battisti (Io tu noi tutti) - Amarsi un po'](https://i.ytimg.com/vi/RQ5PdErrCJc/hqdefault.jpg)](https://www.youtube.com/watch?v=RQ5PdErrCJc)
