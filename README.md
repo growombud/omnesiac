@@ -107,3 +107,5 @@ If you contribute to this library you are strongly encouraged to append your dev
 [![Francis Lai (Love Story Soundtrack) - Bozo Barrett](https://i.ytimg.com/vi/-j-KoAUln9U/hqdefault.jpg)](https://www.youtube.com/watch?v=-j-KoAUln9U)
 
 [![Lucio Battisti (Io tu noi tutti) - Amarsi un po'](https://i.ytimg.com/vi/RQ5PdErrCJc/hqdefault.jpg)](https://www.youtube.com/watch?v=RQ5PdErrCJc)
+
+[![Deodato - Also Sprach Zarathustra](https://i.ytimg.com/vi/qJK3eUP5Hvg/hqdefault.jpg)](https://www.youtube.com/watch?v=qJK3eUP5Hvg)
