@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/omnesiac.svg)](https://badge.fury.io/js/omnesiac)
 [![Build Status](https://travis-ci.org/growombud/omnesiac.svg?branch=master)](https://travis-ci.org/growombud/omnesiac)
+[![codecov](https://codecov.io/gh/growombud/omnesiac/branch/master/graph/badge.svg)](https://codecov.io/gh/growombud/omnesiac)
 
 ## Overview
 
@@ -65,8 +66,6 @@ const results = await throttledFn(throttleKey, param1, param2);
   - Might make sense in the blocking scenario
 - Many more tests
   - Ensure proper scoping / garbage-collection aspects
-- Implement CodeCov.io or similar
-  - Probably Istanbul
 
 ## Contributing
 
