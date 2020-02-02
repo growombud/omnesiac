@@ -11,6 +11,13 @@ script:
 
 jobs:
   include:
+    - stage: code coverage report
+      node_js: '12'
+      script:
+        - yarn global add codecov
+        - yarn coverage
+      after_success:
+        - codecov
     - stage: npm release
       if: tag IS present
       node_js: '12'
