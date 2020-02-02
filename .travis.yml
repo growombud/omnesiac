@@ -17,7 +17,7 @@ jobs:
         - yarn global add codecov
         - yarn coverage
       after_success:
-        - codecov
+        - codecov -f ./coverage/coverage-final.json
     - stage: npm release
       if: tag IS present
       node_js: '12'
