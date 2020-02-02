@@ -22,8 +22,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "test": "npx mocha --require ts-node/register --recursive \"src/**/*.spec.ts\"",
+    "test": "npx mocha --require ts-node/register --require source-map-support/register --recursive \"src/**/*.spec.ts\"",
     "ci-test": "yarn run lint && yarn test && yarn run build",
+    "coverage": "yarn run build && npx nyc yarn run test",
     "test-build": "npx mocha --require ts-node/register --reporter xunit --reporter-options output=omnesiac-test-reports.xml --recursive \"src/**/*.spec.ts\"",
     "lint": "eslint \"./src/**\"",
     "lint-build": "eslint -f checkstyle \"./src/**\" -o omnesiac-checkstyle-reports.xml",
@@ -32,6 +33,7 @@
     "format-check": "prettier --list-different \"src/**/*.ts\" \"src/**/*.js\""
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/mocha": "^5.2.7",
     "@types/node": "^13.5.1",
     "@types/sinon": "^7.5.1",
@@ -41,9 +43,11 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "mocha": "^7.0.1",
+    "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "should": "^13.2.3",
     "sinon": "^8.1.1",
+    "source-map-support": "^0.5.16",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
