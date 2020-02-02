@@ -1,6 +1,6 @@
 {
   "name": "omnesiac",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Mutually-Exclusive, Asynchronous Memoization",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -20,6 +20,14 @@
   ],
   "author": "Jonathan Griggs <jonathan.griggs@ombud.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/growombud/omnesiac.git"
+  },
+  "bugs": {
+    "url": "https://github.com/growombud/omnesiac/issues"
+  },
+  "homepage": "https://github.com/growombud/omnesiac",
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "npx mocha --require ts-node/register --require source-map-support/register --recursive \"src/**/*.spec.ts\"",
