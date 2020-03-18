@@ -1,6 +1,6 @@
 {
   "name": "omnesiac",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Mutually-Exclusive, Asynchronous Memoization",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
