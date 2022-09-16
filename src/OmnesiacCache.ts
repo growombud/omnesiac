@@ -2,6 +2,7 @@ export interface OmnesiacResult<T> {
   ttl?: number;
   inFlight?: boolean;
   result?: T;
+  error?: Error | false;
 }
 
 export default class OmnesiacCache<T> {

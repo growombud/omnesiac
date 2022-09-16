@@ -2,13 +2,16 @@ import should = require('should');
 import OmnesiacCache from './OmnesiacCache';
 import * as sinon from 'sinon';
 
-function wait(ms: number, result?: unknown): Promise<unknown> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(result), ms);
-  });
-}
-
 describe('OmnesiacCache', () => {
+  let clock: sinon.SinonFakeTimers;
+
+  before(() => {
+    clock = sinon.useFakeTimers();
+  });
+
+  after(() => {
+    clock.restore();
+  });
   describe('set()', () => {
     it('should cache a value, and remove after TTL has expired', async () => {
       const cache = new OmnesiacCache();
@@ -19,11 +22,11 @@ describe('OmnesiacCache', () => {
       cache.set(key, { ttl });
       cache.set(otherKey, { ttl: 0 });
 
-      await wait(ttl / 2);
+      await clock.tickAsync(ttl / 2);
       cache.get(key).should.be.an.Object().with.property('ttl').eql(ttl);
 
       removeSpy.calledOnceWith(key).should.be.false();
-      await wait(ttl / 2 + 1);
+      await clock.tickAsync(ttl / 2);
       removeSpy.calledOnceWith(key).should.be.true();
 
       should(cache.get(key)).not.be.ok();
@@ -39,7 +42,7 @@ describe('OmnesiacCache', () => {
       cache.set(key, { ttl });
       cache.set(otherKey, { ttl: 0 });
 
-      await wait(50);
+      await clock.tickAsync(50);
 
       cache.get(key).should.be.an.Object().with.property('ttl').eql(ttl);
 

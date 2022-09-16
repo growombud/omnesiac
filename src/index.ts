@@ -16,14 +16,21 @@ export = function Omnesiac<T extends (...args: any[]) => any>(
 
   return async function (key: string, ...args: Parameters<T>): Promise<ReturnType<T> | void> {
     const val = cache.get(key);
-    if (!val) {
-      cache.set(key, { inFlight: true });
-      const retVal = await fn(...args);
-      cache.set(key, { ttl, inFlight: false, result: retVal });
-      return retVal;
-    } else if (val.inFlight) {
+    if (val?.inFlight && blocking) {
       while (val.inFlight && blocking) {
         await wait(pollFrequencyMs);
+      }
+    }
+
+    if (!val || val.error) {
+      cache.set(key, { inFlight: true, error: false });
+      try {
+        const retVal = await fn(...args);
+        cache.set(key, { ttl, inFlight: false, result: retVal, error: false });
+        return retVal;
+      } catch (err) {
+        cache.set(key, { ttl: 0, inFlight: false, error: err as Error });
+        throw err;
       }
     }
     return val.result;
