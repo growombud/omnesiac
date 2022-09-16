@@ -2,10 +2,9 @@ import should = require('should');
 import OmnesiacCache from './OmnesiacCache';
 import * as sinon from 'sinon';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function wait<T extends any[]>(ms: number, ...args: T): Promise<T> {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(...args), ms);
+function wait(ms: number, result?: unknown): Promise<unknown> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(result), ms);
   });
 }
 
@@ -21,11 +20,7 @@ describe('OmnesiacCache', () => {
       cache.set(otherKey, { ttl: 0 });
 
       await wait(ttl / 2);
-      cache
-        .get(key)
-        .should.be.an.Object()
-        .with.property('ttl')
-        .eql(ttl);
+      cache.get(key).should.be.an.Object().with.property('ttl').eql(ttl);
 
       removeSpy.calledOnceWith(key).should.be.false();
       await wait(ttl / 2 + 1);
@@ -46,11 +41,7 @@ describe('OmnesiacCache', () => {
 
       await wait(50);
 
-      cache
-        .get(key)
-        .should.be.an.Object()
-        .with.property('ttl')
-        .eql(ttl);
+      cache.get(key).should.be.an.Object().with.property('ttl').eql(ttl);
 
       removeSpy.calledOnce.should.be.false();
 
