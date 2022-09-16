@@ -2,10 +2,9 @@ import should = require('should');
 import Omnesiac = require('./index');
 import * as sinon from 'sinon';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function wait<T extends any[]>(ms: number, ...args: T): Promise<T> {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(...args), ms);
+function wait(ms: number, result?: unknown): Promise<unknown> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(result), ms);
   });
 }
 
@@ -26,11 +25,8 @@ describe('Omnesiac', () => {
         return { result, time: Date.now() };
       };
 
-      const [
-        { result: result1, time: time1 },
-        { result: result2, time: time2 },
-        { result: result3, time: time3 },
-      ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
+      const [{ result: result1, time: time1 }, { result: result2, time: time2 }, { result: result3, time: time3 }] =
+        await Promise.all([wrapper(), wrapper(), wrapper()]);
 
       time1.should.be.a.Number().greaterThan(time2);
       time1.should.be.a.Number().greaterThan(time3);
@@ -53,11 +49,8 @@ describe('Omnesiac', () => {
         return { result, time: Date.now() };
       };
 
-      const [
-        { result: result1, time: time1 },
-        { result: result2, time: time2 },
-        { result: result3, time: time3 },
-      ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
+      const [{ result: result1, time: time1 }, { result: result2, time: time2 }, { result: result3, time: time3 }] =
+        await Promise.all([wrapper(), wrapper(), wrapper()]);
 
       time1.should.be.a.Number().lessThanOrEqual(time2);
       time1.should.be.a.Number().lessThanOrEqual(time3);
@@ -84,11 +77,8 @@ describe('Omnesiac', () => {
         return { result, time: Date.now() };
       };
 
-      const [
-        { result: result1, time: time1 },
-        { result: result2, time: time2 },
-        { result: result3, time: time3 },
-      ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
+      const [{ result: result1, time: time1 }, { result: result2, time: time2 }, { result: result3, time: time3 }] =
+        await Promise.all([wrapper(), wrapper(), wrapper()]);
 
       time1.should.be.a.Number().lessThanOrEqual(time2);
       time1.should.be.a.Number().lessThanOrEqual(time3);
@@ -105,11 +95,8 @@ describe('Omnesiac', () => {
 
       await wait(100);
 
-      const [
-        { result: result4, time: time4 },
-        { result: result5, time: time5 },
-        { result: result6, time: time6 },
-      ] = await Promise.all([wrapper(), wrapper(), wrapper()]);
+      const [{ result: result4, time: time4 }, { result: result5, time: time5 }, { result: result6, time: time6 }] =
+        await Promise.all([wrapper(), wrapper(), wrapper()]);
 
       time4.should.be.a.Number().greaterThan(time1);
       time4.should.be.a.Number().greaterThan(time2);
