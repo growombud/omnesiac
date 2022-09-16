@@ -37,8 +37,8 @@
     "lint": "eslint \"./src/**\"",
     "lint-build": "eslint -f checkstyle \"./src/**\" -o omnesiac-checkstyle-reports.xml",
     "build": "yarn clean && tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "format-check": "prettier --list-different \"src/**/*.ts\" \"src/**/*.js\""
+    "format": "prettier --write --no-error-on-unmatched-pattern \"src/**/*.ts\" \"src/**/*.js\"",
+    "format-check": "prettier --no-error-on-unmatched-pattern --list-different \"src/**/*.ts\" \"src/**/*.js\""
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
