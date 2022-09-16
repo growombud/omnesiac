@@ -16,16 +16,24 @@ export = function Omnesiac<T extends (...args: any[]) => any>(
 
   return async function(key: string, ...args: Parameters<T>): Promise<ReturnType<T> | void> {
     const val = cache.get(key);
-    if (!val) {
-      cache.set(key, { inFlight: true });
-      const retVal = await fn(...args);
-      cache.set(key, { ttl, inFlight: false, result: retVal });
-      return retVal;
-    } else if (val.inFlight) {
+    if (val && val.inFlight && blocking) {
       while (val.inFlight && blocking) {
         await wait(pollFrequencyMs);
       }
+      if (!val.error) {
+        return val.result;
+      }
+    } else if (val && val.inFlight && !blocking) {
+      // If you're not blocking, then by definition, you can't be dependent upon a return value.
+      return;
     }
-    return val.result;
+    cache.set(key, { inFlight: true });
+    try {
+      const retVal = await fn(...args);
+      cache.set(key, { ttl, inFlight: false, result: retVal });
+      return retVal;
+    } catch (err) {
+      cache.set(key, { ttl, inFlight: false, error: err });
+    }
   };
 };
