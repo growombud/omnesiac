@@ -2,7 +2,7 @@ import OmnesiacCache from './OmnesiacCache';
 import OmnesiacOptions from './OmnesiacOptions';
 
 const wait = (ms: number): Promise<void> =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     setTimeout(() => resolve(), ms);
   });
 
@@ -14,7 +14,7 @@ export = function Omnesiac<T extends (...args: any[]) => any>(
   const { ttl = 0, blocking = false, pollFrequencyMs = 10 } = options;
   const cache = new OmnesiacCache<ReturnType<T>>();
 
-  return async function(key: string, ...args: Parameters<T>): Promise<ReturnType<T> | void> {
+  return async function (key: string, ...args: Parameters<T>): Promise<ReturnType<T> | void> {
     const val = cache.get(key);
     if (val && val.inFlight && blocking) {
       while (val.inFlight && blocking) {
