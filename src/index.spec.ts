@@ -35,7 +35,7 @@ describe('Omnesiac', () => {
       should(result2).not.be.ok();
       should(result3).not.be.ok();
 
-      fn.calledOnce.should.be.true;
+      fn.calledOnce.should.be.true();
     });
   });
   describe('blocking = true', () => {
@@ -63,7 +63,7 @@ describe('Omnesiac', () => {
       result2.should.be.a.Number().eql(result1);
       result3.should.be.a.Number().eql(result1);
 
-      fn.calledOnce.should.be.true;
+      fn.calledOnce.should.be.true();
     });
   });
   describe('ttl = ?', () => {
