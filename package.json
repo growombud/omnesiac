@@ -30,7 +30,7 @@
   "homepage": "https://github.com/growombud/omnesiac",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "test": "npx mocha --require ts-node/register --require source-map-support/register --recursive \"src/**/*.spec.ts\"",
+    "test": "npx mocha --require ts-node/register --require source-map-support/register --reporter ./scripts/mocha-reporter.js --recursive \"src/**/*.spec.ts\"",
     "ci-test": "yarn run lint && yarn test && yarn run build",
     "coverage": "yarn run build && npx nyc yarn run test",
     "test-build": "npx mocha --require ts-node/register --reporter xunit --reporter-options output=omnesiac-test-reports.xml --recursive \"src/**/*.spec.ts\"",
