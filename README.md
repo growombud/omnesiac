@@ -1,8 +1,7 @@
 # (-\_-)ゞ゛ Omnesiac
 
 [![npm version](https://badge.fury.io/js/omnesiac.svg)](https://badge.fury.io/js/omnesiac)
-[![Build Status](https://travis-ci.org/growombud/omnesiac.svg?branch=master)](https://travis-ci.org/growombud/omnesiac)
-[![codecov](https://codecov.io/gh/growombud/omnesiac/branch/master/graph/badge.svg)](https://codecov.io/gh/growombud/omnesiac)
+[![Build](https://github.com/growombud/omnesiac/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/growombud/omnesiac/actions/workflows/build.yml)
 
 ## Overview
 
