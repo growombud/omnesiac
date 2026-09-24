@@ -75,6 +75,14 @@ const results = await throttledFn(throttleKey, param1, param2);
 
 \* (Optional, but strongly encouraged) Link to your development soundtrack appending this `README.md`
 
+## Releasing
+
+Maintainers only. Releases are staged on npm by the [Publish](.github/workflows/publish.yml) workflow and go live only once an npm maintainer approves them with 2FA.
+
+1. Open a PR that sets `version` in `package.json` (e.g. `npm version 0.0.7 --no-git-tag-version`), and merge it.
+2. Create a GitHub release whose tag is exactly that version, with no `v` prefix: `gh release create 0.0.7 --target master --generate-notes`. A prerelease version (`0.0.7-rc.0`) is staged under the `next` dist-tag instead of `latest`.
+3. Once the workflow has passed, approve the staged version under Staged Packages on npmjs.com, or run `npm stage list omnesiac` and then `npm stage approve <stage-id>`.
+
 # License
 
 MIT License
