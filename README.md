@@ -51,12 +51,31 @@ const throttleKey = 'anyStringPerhapsAUserId';
 const results = await throttledFn(throttleKey, param1, param2);
 ```
 
+## Options
+
+| Option            | Default | Description                                                                                                                                        |
+| ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ttl`             | `0`     | How long, in ms, to cache a successful result, counted from when the function resolves. `0` caches it forever.                                     |
+| `blocking`        | `false` | Whether calls that arrive while the function is in flight for their key wait for its outcome (`true`) or resolve to `undefined` (`false`).         |
+| `pollFrequencyMs` | `10`    | No longer used. Blocking calls now wait on the in-flight call directly instead of polling. The option is still accepted so existing code compiles. |
+
+## Behavior
+
+### While a call is in flight
+
+- **Blocking:** later calls for the same key wait, then settle with the same result, or reject with the same error, as the call that ran the function. The order in which they settle is not guaranteed.
+- **Non-blocking:** later calls for the same key resolve to `undefined` right away, without running the function. This is intended, for fire-and-forget throttling. Note that a non-blocking caller can't tell this `undefined` apart from a cached result that happens to be `undefined`.
+
+### When the function fails
+
+- A rejection, or a synchronous throw, is never cached. The key is cleared as soon as the call fails, so the next call for that key runs the function again.
+- The call that ran the function rejects with the error. In blocking mode, every call waiting on it rejects with the same error. Non-blocking calls that arrived during the failed call have already resolved to `undefined`.
+- Failures are not throttled: while the function keeps failing, the first call after each failure runs it again.
+- There is no timeout. A function that never settles keeps its key in flight, so blocking calls for that key wait as long as it does.
+
 ## TODO
 
 - Better Documentation
-  - Behavior
-    - `{ ttl: 0 }` = Never expire / cache forever
-    - Resolution order of blocked calls not guaranteed
   - Real-world Use Cases
     - \[Non-Blocking\] Sample data collection, where approximate precision is good-enough
     - \[Blocking\] Cacheing burstable requests against shared resources

@@ -1,6 +1,7 @@
 export interface OmnesiacResult<T> {
   ttl?: number;
   inFlight?: boolean;
+  promise?: Promise<T>;
   result?: T;
 }
 
