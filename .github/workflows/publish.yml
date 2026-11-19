@@ -108,8 +108,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          # Staged publishing needs npm >= 11.15.0; Node 26.13.0 bundles 11.20.0.
-          node-version: 26.13.0
+          # Staged publishing needs npm >= 11.15.0; Node 26.13.1 bundles 11.20.0.
+          node-version: 26.13.1
           package-manager-cache: false
 
       - name: Stage
